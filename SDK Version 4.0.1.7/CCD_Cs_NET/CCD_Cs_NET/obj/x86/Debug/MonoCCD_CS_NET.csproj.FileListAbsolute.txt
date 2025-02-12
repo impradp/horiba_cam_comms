@@ -1,0 +1,17 @@
+C:\jy\.NET_CSharp_MonoCCD_4_25_16\MonoCCD_CS_NET\MonoCCD_CS_NET\bin\Debug\MonoCCD_CS_NET.exe
+C:\jy\.NET_CSharp_MonoCCD_4_25_16\MonoCCD_CS_NET\MonoCCD_CS_NET\bin\Debug\MonoCCD_CS_NET.pdb
+C:\jy\.NET_CSharp_MonoCCD_4_25_16\MonoCCD_CS_NET\MonoCCD_CS_NET\bin\Debug\Interop.JYCCDLib.dll
+C:\jy\.NET_CSharp_MonoCCD_4_25_16\MonoCCD_CS_NET\MonoCCD_CS_NET\bin\Debug\Interop.JYCONFIGBROWSERCOMPONENTLib.dll
+C:\jy\.NET_CSharp_MonoCCD_4_25_16\MonoCCD_CS_NET\MonoCCD_CS_NET\bin\Debug\Interop.JYMONOLib.dll
+C:\jy\.NET_CSharp_MonoCCD_4_25_16\MonoCCD_CS_NET\MonoCCD_CS_NET\bin\Debug\Interop.JYSYSTEMLIBLib.dll
+C:\jy\.NET_CSharp_MonoCCD_4_25_16\MonoCCD_CS_NET\MonoCCD_CS_NET\obj\x86\Debug\Interop.JYCCDLib.dll
+C:\jy\.NET_CSharp_MonoCCD_4_25_16\MonoCCD_CS_NET\MonoCCD_CS_NET\obj\x86\Debug\Interop.JYCONFIGBROWSERCOMPONENTLib.dll
+C:\jy\.NET_CSharp_MonoCCD_4_25_16\MonoCCD_CS_NET\MonoCCD_CS_NET\obj\x86\Debug\Interop.JYMONOLib.dll
+C:\jy\.NET_CSharp_MonoCCD_4_25_16\MonoCCD_CS_NET\MonoCCD_CS_NET\obj\x86\Debug\Interop.JYSYSTEMLIBLib.dll
+C:\jy\.NET_CSharp_MonoCCD_4_25_16\MonoCCD_CS_NET\MonoCCD_CS_NET\obj\x86\Debug\Interop.MSXML2.dll
+C:\jy\.NET_CSharp_MonoCCD_4_25_16\MonoCCD_CS_NET\MonoCCD_CS_NET\obj\x86\Debug\MonoCCD_CS_NET.csproj.ResolveComReference.cache
+C:\jy\.NET_CSharp_MonoCCD_4_25_16\MonoCCD_CS_NET\MonoCCD_CS_NET\obj\x86\Debug\MonoCCD_CS_NET.Form1.resources
+C:\jy\.NET_CSharp_MonoCCD_4_25_16\MonoCCD_CS_NET\MonoCCD_CS_NET\obj\x86\Debug\MonoCCD_CS_NET.Properties.Resources.resources
+C:\jy\.NET_CSharp_MonoCCD_4_25_16\MonoCCD_CS_NET\MonoCCD_CS_NET\obj\x86\Debug\MonoCCD_CS_NET.csproj.GenerateResource.Cache
+C:\jy\.NET_CSharp_MonoCCD_4_25_16\MonoCCD_CS_NET\MonoCCD_CS_NET\obj\x86\Debug\MonoCCD_CS_NET.exe
+C:\jy\.NET_CSharp_MonoCCD_4_25_16\MonoCCD_CS_NET\MonoCCD_CS_NET\obj\x86\Debug\MonoCCD_CS_NET.pdb
