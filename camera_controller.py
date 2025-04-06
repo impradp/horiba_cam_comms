@@ -6,29 +6,26 @@ from zaber_motion.ascii import Connection
 from zaber_motion import Units
 import sys
 import time
-import pythoncom  # Added for COM initialization
-
-from horiba_ccd_interface import acquire_max_intensity
+import pythoncom
+from horiba_ccd_interface import acquire_max_intensity, horiba_ccd
 
 stop_flag = False
 
 def start_program():
-    global move_units, disp_units, hor_dis, hor_step, ver_dis, ver_step, hor_home, ver_home, sleep_time
+    global move_units, disp_units, hor_dis, hor_step, ver_dis, ver_step, hor_home, ver_home, sleep_time, ccd
     global stop_flag
 
-    #move_units = Units.LENGTH_MILLIMETRES
-    #disp_units = Units.LENGTH_MILLIMETRES
     move_units = Units.LENGTH_MICROMETRES
     isp_units = Units.LENGTH_MICROMETRES
 
-    hor_dis = 5  # maximum travel distance 75 mm
+    hor_dis = 330
     hor_step = 1
-    ver_dis = 5  # maximum travel distance 25 mm
+    ver_dis = 10
     ver_step = 1
-    hor_home = 52711.85
-    ver_home = 12820.17
+    hor_home = 0
+    ver_home = 0
     
-    sleep_time = 3  # time in seconds
+    sleep_time = 2
 
     arr_x = int(hor_dis / hor_step)
     arr_y = int(ver_dis / ver_step)
@@ -38,23 +35,29 @@ def start_program():
     T_coor = np.zeros((arr_y, arr_x))
     intensity_data = np.zeros((arr_y, arr_x))
 
+    # Initialize CCD once
+    pythoncom.CoInitialize()
+    ccd = horiba_ccd()
+    ccd.open_camera("CCD2")
+    print("CCD initialized once at start")
+
     thread = threading.Thread(target=run_program)
     thread.start()
 
 def stop_program():
-    global stop_flag
+    global stop_flag, ccd
     stop_flag = True
+    if 'ccd' in globals():
+        ccd.close_camera()  # Clean up CCD when stopping
+        pythoncom.CoUninitialize()
     print("Stopping program...")
 
 def run_program():
-    global stop_flag
+    global stop_flag, ccd
     x = datetime.now()
     
-    # Initialize COM for this thread
-    pythoncom.CoInitialize()
-    
     folder_dat = os.path.join(
-        "C:/Users\hnakamur/Box Sync/Nakamura_Lab/Users/Sudeep/SHG_Measurements/Data for SHG/From_Syncereity_Camera/2025_03_27/SHG mapping Data",
+        "C:/Users/hnakamur/Box Sync/Nakamura_Lab/Users/Sudeep/SHG_Measurements/Data for SHG/From_Syncereity_Camera/2025_03_27/SHG mapping Data",
         x.strftime("20%y_%m_%d")
     )
 
@@ -109,16 +112,18 @@ def run_program():
                     X_coor[i, j] = position_X
                     T_coor[i, j] = position_T
                     
-                    max_intensity = acquire_max_intensity(ccd_id="CCD2", integration_time=5, mode="spec")
+                    max_intensity = acquire_max_intensity(ccd=ccd, integration_time=2, mode="spec")
                     intensity_data[i, j] = max_intensity
-                    # time.sleep(2)
                     
                     data_file.write(f"{position_X}\t{position_T}\t{max_intensity}\n")
                     print(f"X position: {position_X}, T position: {position_T}, Max intensity: {max_intensity}")
 
                     axisX.move_relative(hor_step, move_units)
-                    # time.sleep(sleep_time)
 
                 axisT.move_relative(ver_step, move_units)
+    
+    # Clean up after completion
+    ccd.close_camera()
+    pythoncom.CoUninitialize()
 
 start_program()

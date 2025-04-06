@@ -567,56 +567,44 @@ if __name__ == '__main__':
     syn.close_camera()
         
         
-def acquire_max_intensity(ccd_id="CCD2", integration_time=2, mode="spec"):
-    syn = horiba_ccd()
-    syn.open_camera("CCD2")
-    print("Camera opened")
+def acquire_max_intensity(ccd, integration_time=2, mode="spec"):  # Changed to accept ccd object
+    print("Using existing camera instance")
     
-    syn.set_integration_time(2)
+    ccd.set_integration_time(integration_time)
     
-    fmode = "spec" # "image or "spec"
-    
-    if fmode=="image":
-        syn.set_acquisition_mode("image", True)
+    fmode = mode
+    if fmode == "image":
+        ccd.set_acquisition_mode("image", True)
     elif fmode == "spec":
-        syn.set_acquisition_mode("fvb", True)
+        ccd.set_acquisition_mode("fvb", True)
     
-    syn.dump_settings()
+    ccd.dump_settings()
     
     for i in range(1):
         print("Running acquisition:", i)
-        syn.set_adc(i)
-        syn.update_acq_settings_on_ccd()
-        syn.start_acquisition(True)
+        ccd.set_adc(i)
+        ccd.update_acq_settings_on_ccd()
+        ccd.start_acquisition(True)
         
-        # Wait for acquisition to complete
-        i1 = 0      
+        i1 = 0
         stop_at = 100
-        while syn.get_acquisition_busy():
+        while ccd.get_acquisition_busy():
             if i1 % 10 == 0: print("Waiting for acquisition to complete...")
             time.sleep(0.1)
-            i1+=1
-            if i1>stop_at: break
+            i1 += 1
+            if i1 > stop_at: break
         
-        if i1 >stop_at:
+        if i1 > stop_at:
             print("Acquisition failed")
-            syn.abort_acquisition()
-            max_intensity = -1
-            break
+            ccd.abort_acquisition()
+            return -1
         else:
             print("Acquisition complete")
         
-        buffer = syn.get_acquired_data()
-        
-        
+        buffer = ccd.get_acquired_data()
         syn_data = buffer[0]
-        first_500=syn_data[:500]
-        avg_500 = sum(first_500)/500
+        first_500 = syn_data[:500]
+        avg_500 = sum(first_500) / 500
         
-        syn_data = [x-avg_500 for x in syn_data]
-        syn.close_camera()
+        syn_data = [x - avg_500 for x in syn_data]
         return max(syn_data)
-    
-    
-    
-    
